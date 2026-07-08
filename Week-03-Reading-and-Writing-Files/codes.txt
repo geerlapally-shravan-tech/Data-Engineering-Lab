@@ -1,0 +1,92 @@
+File 1: create_database.sql
+
+Create the file:
+
+Program-04-PostgreSQL-Read-Write/
+│
+├── create_database.sql
+
+Paste:
+
+-- ==========================================
+-- Experiment No. 4
+-- Create Database
+-- ==========================================
+
+CREATE DATABASE dataengineering1;
+
+Note: Students only need to run this once. If the database already exists, PostgreSQL will display an error, which is expected.
+
+File 2: create_table.sql
+
+Create:
+
+Program-04-PostgreSQL-Read-Write/
+│
+├── create_table.sql
+
+Paste:
+
+-- ==========================================
+-- Experiment No. 4
+-- Create Student Table
+-- ==========================================
+
+CREATE TABLE student
+(
+    id INT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    department VARCHAR(30) NOT NULL
+);
+File 3: insert_records.sql
+
+Create:
+
+Program-04-PostgreSQL-Read-Write/
+│
+├── insert_records.sql
+
+Paste:
+
+-- ==========================================
+-- Experiment No. 4
+-- Insert Student Records
+-- ==========================================
+
+INSERT INTO student (id, name, department)
+VALUES
+(101,'Rahul','CSE'),
+(102,'Anitha','ECE'),
+(103,'Kiran','MECH');
+File 4: display_records.sql
+
+Create:
+
+Program-04-PostgreSQL-Read-Write/
+│
+├── display_records.sql
+
+Paste:
+
+-- ==========================================
+-- Experiment No. 4
+-- Display Student Records
+-- ==========================================
+
+SELECT * FROM student;
+File 5: delete_records.sql (Optional)
+
+Create:
+
+Program-04-PostgreSQL-Read-Write/
+│
+├── delete_records.sql
+
+Paste:
+
+-- ==========================================
+-- Experiment No. 4
+-- Delete All Student Records
+-- ==========================================
+
+DELETE FROM student;
