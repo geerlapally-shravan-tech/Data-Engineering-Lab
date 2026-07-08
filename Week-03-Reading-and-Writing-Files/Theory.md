@@ -1,18 +1,18 @@
 # Theory
 
-# Experiment No. 3
+# Experiment No. 4
 
-# Reading and Writing Files
+# Reading and Writing PostgreSQL Database Using Python
 
 ---
 
 # 1. Introduction
 
-Data is one of the most valuable resources in modern organizations. Every application stores and retrieves data from different sources such as text files, CSV files, JSON files, and databases. Before data can be analyzed or processed, it must first be read from its source and, after processing, written back to a file or database.
+In Data Engineering, databases are used to store, manage, and retrieve large volumes of structured data. Python can communicate with relational databases using database connectors, enabling developers to automate data storage and retrieval.
 
-Python provides powerful built-in libraries that make file handling simple and efficient. These libraries enable Data Engineers to work with structured and semi-structured data, automate ETL (Extract, Transform, Load) processes, and build reliable data pipelines.
+PostgreSQL is one of the most popular open-source Relational Database Management Systems (RDBMS). It is widely used in enterprise applications, cloud platforms, data warehouses, and ETL (Extract, Transform, Load) pipelines because of its reliability, scalability, and SQL compliance.
 
-In this experiment, students will learn how to read and write data using different file formats and PostgreSQL databases.
+Python communicates with PostgreSQL using the **psycopg2** library, which provides functions for establishing database connections, executing SQL statements, and retrieving query results.
 
 ---
 
@@ -20,285 +20,220 @@ In this experiment, students will learn how to read and write data using differe
 
 After completing this experiment, students will be able to:
 
-- Understand file handling in Python.
-- Read and write text files.
-- Read and write CSV files.
-- Read and write JSON files.
+- Understand the basics of PostgreSQL.
 - Connect Python with PostgreSQL.
-- Store and retrieve records from a database.
+- Execute SQL queries from Python.
+- Create database tables.
+- Insert records into a table.
+- Retrieve records from a table.
+- Close database resources correctly.
 
 ---
 
-# 3. What is File Handling?
+# 3. What is PostgreSQL?
 
-File handling is the process of creating, opening, reading, writing, updating, and closing files using a programming language.
+PostgreSQL is an open-source Object Relational Database Management System (ORDBMS) used for storing and managing structured data. It supports SQL standards, transactions, indexing, views, stored procedures, triggers, and advanced data types.
 
-Python provides built-in functions for file handling that allow programmers to store data permanently instead of keeping it only in memory.
+PostgreSQL is widely used in:
+
+- Banking applications
+- Healthcare systems
+- E-Commerce platforms
+- Government databases
+- Data Engineering pipelines
+- Cloud-based applications
 
 ---
 
-# 4. Types of Files
+# 4. What is psycopg2?
 
-Python commonly works with the following types of files:
+**psycopg2** is a PostgreSQL database adapter for Python.
 
-## Text Files (.txt)
+It allows Python programs to:
 
-Text files store plain text data.
+- Connect to PostgreSQL databases
+- Execute SQL queries
+- Insert records
+- Update records
+- Delete records
+- Retrieve records
+
+Installation command:
+
+```bash
+pip install psycopg2-binary
+```
+
+---
+
+# 5. Database Connectivity Steps
+
+Python communicates with PostgreSQL through the following steps:
+
+1. Import the psycopg2 module.
+2. Establish a database connection.
+3. Create a cursor object.
+4. Execute SQL queries.
+5. Commit changes (for INSERT, UPDATE, DELETE).
+6. Retrieve records (for SELECT).
+7. Close the cursor.
+8. Close the database connection.
+
+---
+
+# 6. Connection Parameters
+
+A database connection requires the following parameters:
+
+| Parameter | Description |
+|-----------|-------------|
+| host | Database server address (localhost) |
+| port | PostgreSQL server port (5432 or 5433) |
+| database | Database name |
+| user | PostgreSQL username |
+| password | PostgreSQL password |
 
 Example:
 
-```
-Name : Rahul
-Age : 21
-Department : CSE
-```
-
-Applications
-
-- Notes
-- Log files
-- Configuration files
-- Reports
-
----
-
-## CSV Files (.csv)
-
-CSV stands for **Comma-Separated Values**.
-
-It stores tabular data in rows and columns.
-
-Example
-
-```
-ID,Name,Department
-101,Rahul,CSE
-102,Anitha,ECE
+```python
+connection = psycopg2.connect(
+    host="localhost",
+    port="5433",
+    database="dataengineering1",
+    user="postgres",
+    password="1234"
+)
 ```
 
-Applications
-
-- Student records
-- Employee data
-- Sales reports
-- Financial data
-
 ---
 
-## JSON Files (.json)
+# 7. Cursor Object
 
-JSON stands for **JavaScript Object Notation**.
+A cursor is an object used to execute SQL statements and retrieve query results.
 
-It stores data as key-value pairs.
+Common cursor methods:
 
-Example
+- execute()
+- fetchone()
+- fetchmany()
+- fetchall()
 
-```json
-{
-    "id":101,
-    "name":"Rahul",
-    "department":"CSE"
-}
+Example:
+
+```python
+cursor = connection.cursor()
 ```
 
-Applications
+---
 
-- REST APIs
-- Web applications
-- Data exchange
-- Configuration files
+# 8. SQL Operations
+
+The four basic database operations are known as CRUD operations.
+
+| Operation | SQL Statement |
+|-----------|---------------|
+| Create | CREATE |
+| Read | SELECT |
+| Update | UPDATE |
+| Delete | DELETE |
 
 ---
 
-## PostgreSQL Database
+# 9. Transaction Management
 
-PostgreSQL is an open-source relational database management system (RDBMS).
+Whenever data is modified, the changes should be saved permanently using:
 
-Unlike files, databases store data in tables and support SQL queries.
+```python
+connection.commit()
+```
 
-Applications
-
-- Banking
-- Hospital Management
-- Inventory Systems
-- Enterprise Applications
+If changes are not committed, they may be lost after the connection is closed.
 
 ---
 
-# 5. File Modes in Python
+# 10. Closing Database Resources
 
-| Mode | Description |
-|------|-------------|
-| r | Read |
-| w | Write |
-| a | Append |
-| x | Create New File |
-| rb | Read Binary |
-| wb | Write Binary |
+After completing database operations, both the cursor and the connection should be closed.
 
----
+```python
+cursor.close()
+connection.close()
+```
 
-# 6. File Handling Functions
-
-Python provides several functions for working with files.
-
-### open()
-
-Opens a file.
-
-### read()
-
-Reads the complete file.
-
-### readline()
-
-Reads one line.
-
-### readlines()
-
-Reads all lines.
-
-### write()
-
-Writes data into a file.
-
-### close()
-
-Closes the file.
+Closing resources prevents memory leaks and releases database connections.
 
 ---
 
-# 7. CSV Module
+# 11. Applications
 
-Python provides the **csv** module.
+PostgreSQL is widely used in:
 
-Important functions
-
-- csv.reader()
-- csv.writer()
-- csv.DictReader()
-- csv.DictWriter()
-
-Advantages
-
-- Easy tabular data handling
-- Compatible with Excel
-- Simple syntax
+- Student Information Systems
+- Banking Applications
+- Hospital Management Systems
+- Inventory Management
+- Payroll Systems
+- Data Warehousing
+- Business Intelligence
+- Data Engineering Pipelines
 
 ---
 
-# 8. JSON Module
+# 12. Advantages
 
-Python provides the **json** module.
-
-Important functions
-
-- json.load()
-- json.loads()
-- json.dump()
-- json.dumps()
-
-Advantages
-
-- Lightweight
-- Human-readable
-- Widely used in APIs
+- Open source
+- Highly secure
+- ACID compliant
+- Supports large databases
+- High performance
+- Platform independent
+- Supports concurrent users
 
 ---
 
-# 9. PostgreSQL Connectivity
+# 13. Best Practices
 
-Python communicates with PostgreSQL using the **psycopg2** library.
-
-Steps
-
-1. Connect to database.
-2. Create cursor.
-3. Execute SQL query.
-4. Commit changes.
-5. Retrieve data.
-6. Close connection.
+- Always close database connections.
+- Use parameterized queries to prevent SQL injection.
+- Commit transactions after modifying data.
+- Handle exceptions using try-except blocks.
+- Store passwords securely instead of hardcoding them.
+- Use meaningful table and column names.
 
 ---
 
-# 10. Advantages of File Handling
+# 14. Summary
 
-- Permanent storage
-- Easy data sharing
-- Supports automation
-- Reduces manual work
-- Enables ETL processing
+Python uses the **psycopg2** library to communicate with PostgreSQL databases. A typical workflow involves connecting to the database, executing SQL statements using a cursor, retrieving results, committing transactions, and closing the connection. This approach is widely used in Data Engineering to build ETL pipelines, automate database operations, and process large datasets efficiently.
 
 ---
 
-# 11. Real-World Applications
+# 15. Key Terms
 
-### Banking
-
-Store daily transaction records.
-
-### Healthcare
-
-Maintain patient information.
-
-### E-Commerce
-
-Store customer orders.
-
-### Education
-
-Manage student records.
-
-### Data Engineering
-
-Build ETL pipelines using CSV, JSON, and databases.
-
----
-
-# 12. Best Practices
-
-- Always close files after use.
-- Use the correct file mode.
-- Handle exceptions.
-- Validate input data.
-- Store sensitive information securely.
-- Use CSV for tabular data.
-- Use JSON for API communication.
-- Use databases for large datasets.
-
----
-
-# 13. Summary
-
-Python provides powerful support for file handling using built-in libraries such as **csv** and **json**, along with external libraries like **psycopg2** for database connectivity. These capabilities form the foundation of modern Data Engineering pipelines by enabling reliable data ingestion, transformation, storage, and retrieval.
-
----
-
-# 14. Key Terms
-
-- File Handling
-- Text File
-- CSV
-- JSON
 - PostgreSQL
+- RDBMS
+- ORDBMS
+- SQL
 - psycopg2
+- Cursor
+- Connection
+- Transaction
+- Commit
 - CRUD
 - ETL
 - Database
-- Record
-- Table
 
 ---
 
-# 15. Review Questions
+# 16. Review Questions
 
-1. What is file handling?
-2. Explain different file modes in Python.
-3. What is a CSV file?
-4. What is JSON?
-5. What is PostgreSQL?
-6. Explain the csv module.
-7. Explain the json module.
-8. What is psycopg2?
-9. Explain the steps to connect Python with PostgreSQL.
-10. List the applications of file handling in Data Engineering.
+1. What is PostgreSQL?
+2. What is an RDBMS?
+3. What is psycopg2?
+4. Explain the steps involved in database connectivity.
+5. What is a cursor?
+6. What is the purpose of commit()?
+7. What is the purpose of fetchall()?
+8. Explain CRUD operations.
+9. Why should database connections be closed?
+10. List the applications of PostgreSQL in Data Engineering.
